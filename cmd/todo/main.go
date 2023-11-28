@@ -17,10 +17,11 @@ const (
 
 func main(){
 
-	add := flag.Bool("add", false, "Add a new task to the list")
-	complete := flag.Int("complete", 0, "Complete the task with the provided index")
-	del := flag.Int("del", 0, "Delete the task with the provided index")
-	list := flag.Bool("list", false, "List all tasks")
+	add := flag.Bool("a", false, "Add a new task to the list")
+	complete := flag.Int("c", 0, "Complete the task with the provided index")
+	del := flag.Int("d", 0, "Delete the task with the provided index")
+	list := flag.Bool("l", false, "List all tasks")
+	delCompleted := flag.Bool("dc", false, "Delete all completed tasks")
 
 	flag.Parse()
 
@@ -72,7 +73,14 @@ func main(){
 			}
 		case *list:
 			todos.Print()
+		case *delCompleted:
+			todos.DeleteCompleted()
 
+			err := todos.Store(todoFile)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, err.Error())
+				os.Exit(1)
+			}
 		default:
 			fmt.Fprintln(os.Stdout, "Invalid command")
 			os.Exit(1)

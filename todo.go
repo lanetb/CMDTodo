@@ -44,6 +44,7 @@ func (t *Todos) Complete(index int) error {
 }
 
 func (t *Todos) Delete(index int) error {
+	fmt.Println("Deleting", index)
 	ls := *t
 	if index < 0 || index > len(ls){
 		return errors.New("Invalid index")
