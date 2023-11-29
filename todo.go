@@ -54,6 +54,18 @@ func (t *Todos) Delete(index int) error {
 	return nil
 }
 
+func (t *Todos) DeleteCompleted() {
+	for i := len(*t) - 1; i >= 0; i-- {
+		if (*t)[i].Done {
+			err := t.Delete(i + 1)
+			if err != nil {
+				fmt.Println("Error deleting item:", err)
+			}
+		}
+	}
+}
+
+
 func (t *Todos) Load(filename string) error {
 	file, err := os.ReadFile(filename)
 	if err != nil {
