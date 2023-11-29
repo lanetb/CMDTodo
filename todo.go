@@ -65,6 +65,10 @@ func (t *Todos) DeleteCompleted() {
 	}
 }
 
+func (t *Todos) Clear() {
+	*t = nil
+}
+
 
 func (t *Todos) Load(filename string) error {
 	file, err := os.ReadFile(filename)

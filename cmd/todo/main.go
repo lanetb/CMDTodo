@@ -22,6 +22,7 @@ func main(){
 	del := flag.Int("d", 0, "Delete the task with the provided index")
 	list := flag.Bool("l", false, "List all tasks")
 	delCompleted := flag.Bool("dc", false, "Delete all completed tasks")
+	clear := flag.Bool("clear", false, "Clear all tasks")
 
 	flag.Parse()
 
@@ -75,6 +76,14 @@ func main(){
 			todos.Print()
 		case *delCompleted:
 			todos.DeleteCompleted()
+
+			err := todos.Store(todoFile)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, err.Error())
+				os.Exit(1)
+			}
+		case *clear:
+			todos.Clear()
 
 			err := todos.Store(todoFile)
 			if err != nil {
